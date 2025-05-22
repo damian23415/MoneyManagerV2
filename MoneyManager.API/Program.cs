@@ -2,7 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using MoneyManager.API;
 using MoneyManager.Application.Services;
 using MoneyManager.Application.Services.Interfaces;
+using MoneyManager.Domain;
 using MoneyManager.Domain.Repositories;
+using MoneyManager.Infrastructure;
 using MoneyManager.Infrastructure.Persistence;
 using MoneyManager.Infrastructure.Repositories;
 
@@ -13,7 +15,9 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
 
-builder.Services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+var dispatcher = await RabbitMqDomainEventDispatcher.CreateAsync();
+builder.Services.AddSingleton<IDomainEventDispatcher>(dispatcher);
+
 
 builder.Services.AddDbContext<MoneyManagerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

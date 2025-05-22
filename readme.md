@@ -36,7 +36,7 @@ dotnet test
 - MoneyManager.Tests – testy jednostkowe
 
 ## Najbliższe plany
-- Dodanie kolejkowania zdarzeń (RabbitMQ) - zrealizowane w ramach testów
+- Dodanie wzorca Outbox z RabbitMq, zapis zdarzenia do tabeli - gwarancja ze event nie przepadnie w razie awarii
 - Rozszerzenie walidacji i bezpieczeństwa
 - Rozbudowa funkcjonalności zarządzania budżetem
 - Dodanie powiadomień mailowych (w celu wykorzystania kolejki rabbit) np. budzet zostaje osiągnięty to wyślij powiadomienie

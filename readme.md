@@ -17,7 +17,8 @@ Zawiera m.in.:
 - Entity Framework Core  
 - ASP.NET Core Minimal APIs  
 - Swagger (Swashbuckle)  
-- InMemory Database / SQL Server (konfigurowalne)  
+- InMemory Database / SQL Server (konfigurowalne)
+- RabbitMQ do kolejkowania eventów
 
 ## Testy jednostkowe
 
@@ -35,9 +36,10 @@ dotnet test
 - MoneyManager.Tests – testy jednostkowe
 
 ## Najbliższe plany
-- Dodanie kolejkowania zdarzeń (RabbitMQ)
+- Dodanie kolejkowania zdarzeń (RabbitMQ) - zrealizowane w ramach testów
 - Rozszerzenie walidacji i bezpieczeństwa
 - Rozbudowa funkcjonalności zarządzania budżetem
+- Dodanie powiadomień mailowych (w celu wykorzystania kolejki rabbit) np. budzet zostaje osiągnięty to wyślij powiadomienie
 
 ## Kontakt
 Masz pytania lub chcesz współpracować?

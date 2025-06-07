@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  type: NodePort
+  selector:
+    app: user-service
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: money-manager-api
+spec:
+  type: NodePort
+  selector:
+    app: money-manager-api
+  ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30002
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: money-manager-eventprocessor
+spec:
+  type: NodePort
+  selector:
+    app: money-manager-eventprocessor
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30003

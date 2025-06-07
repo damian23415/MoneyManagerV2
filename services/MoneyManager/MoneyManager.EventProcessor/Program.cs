@@ -18,8 +18,5 @@ processor.OnEventReceived += async (domainEvent) =>
 };
 
 await processor.StartAsync();
-
-Console.WriteLine("Event processor started. Press any key to exit.");
-Console.ReadKey();
-
+await Task.Delay(Timeout.Infinite);
 await processor.DisposeAsync();

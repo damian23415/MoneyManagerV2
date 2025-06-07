@@ -20,9 +20,15 @@ public class RabbitMqDomainEventDispatcher : IDomainEventDispatcher, IAsyncDispo
     
     public static async Task<RabbitMqDomainEventDispatcher> CreateAsync()
     {
+        string rabbitHost = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost";
+        string rabbitUser = Environment.GetEnvironmentVariable("RABBITMQ_USER") ?? "guest";
+        string rabbitPass = Environment.GetEnvironmentVariable("RABBITMQ_PASS") ?? "guest";
+        
         var factory = new ConnectionFactory
         {
-            HostName = "localhost"
+            HostName = rabbitHost,
+            UserName = rabbitUser,
+            Password = rabbitPass
         };
 
         var connection = await factory.CreateConnectionAsync();

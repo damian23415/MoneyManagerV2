@@ -16,7 +16,16 @@ public class RabbitMqEventProcessor : IAsyncDisposable
 
     public async Task StartAsync()
     {
-        var factory = new ConnectionFactory { HostName = "localhost" };
+        string rabbitHost = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost";
+        string rabbitUser = Environment.GetEnvironmentVariable("RABBITMQ_USER") ?? "guest";
+        string rabbitPass = Environment.GetEnvironmentVariable("RABBITMQ_PASS") ?? "guest";
+        
+        var factory = new ConnectionFactory
+        {
+            HostName = rabbitHost,
+            UserName = rabbitUser,
+            Password = rabbitPass
+        };
 
         _connection = await factory.CreateConnectionAsync();
         _channel = await _connection.CreateChannelAsync();

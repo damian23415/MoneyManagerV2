@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: money-manager-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: money-manager-api
+  template:
+    metadata:
+      labels:
+        app: money-manager-api
+    spec:
+      containers:
+        - name: money-manager-api
+          image: docker.io/library/money-manager-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: RABBITMQ_HOST
+              value: "rabbitmq"
+            - name: RABBITMQ_USER
+              value: "guest"
+            - name: RABBITMQ_PASS
+              value: "guest"

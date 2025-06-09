@@ -14,14 +14,6 @@ public class ExpenseRepository : IExpenseRepository
         _dbConnectionFactory = dbConnectionFactory;
     }
 
-    public async Task<IEnumerable<Expense>> GetAllAsync()
-    {
-        using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
-        var sql = "select * from Expenses";
-        
-        return await connection.QueryAsync<Expense>(sql);
-    }
-
     public async Task<Expense?> GetByIdAsync(Guid id)
     {
         using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
@@ -37,16 +29,6 @@ public class ExpenseRepository : IExpenseRepository
         
         var sql = "insert into Expenses (Id, Amount, Date, Description, UserId, CategoryId) " +
                   "values (@Id, @Amount, @Date, @Description, @UserId, @CategoryId)";
-        
-        return await connection.ExecuteAsync(sql, expense);
-    }
-
-    public async Task<int> UpdateAsync(Expense expense)
-    {
-        using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
-        
-        var sql = "update Expenses set Amount = @Amount, Date = @Date, Description = @Description, " +
-                  "UserId = @UserId, CategoryId = @CategoryId where Id = @Id";
         
         return await connection.ExecuteAsync(sql, expense);
     }

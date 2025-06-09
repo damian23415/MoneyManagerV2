@@ -15,14 +15,6 @@ public class BudgetRepository : IBudgetRepository
         _dbConnectionFactory = dbConnectionFactory;
     }
 
-    public async Task<IEnumerable<Budget>> GetAllAsync()
-    {
-        using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
-        const string sql = "select * from Budgets";
-        
-        return await connection.QueryAsync<Budget>(sql);
-    }
-
     public async Task<Budget?> GetBudgetForUserAndCategoryAsync(Guid userId, Guid categoryId)
     {
         using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();

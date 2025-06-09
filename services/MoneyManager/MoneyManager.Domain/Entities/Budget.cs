@@ -30,15 +30,15 @@ public class Budget
         if (userId == Guid.Empty)
             throw new ArgumentException("UserId can't be empty", nameof(userId));
         
-        if (EndDate < StartDate)
-            throw new ArgumentException("End date cannot be earlier than start date.", nameof(EndDate));
-        
-        if (StartDate == default)
+        if (startDate == default)
             throw new ArgumentException("Start date cannot be default value.", nameof(StartDate));
         
-        if (EndDate == default)
+        if (endDate == default)
             throw new ArgumentException("End date cannot be default value.", nameof(EndDate));
 
+        if (endDate < startDate)
+            throw new ArgumentException("End date cannot be earlier than start date.", nameof(EndDate));
+        
         Name = name;
         Limit = limit;
         CategoryId = categoryId;

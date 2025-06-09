@@ -20,11 +20,7 @@ public class BudgetService : IBudgetService
         _budgetRepository = budgetRepository;
         _userClient = userClient;
     }
-
-    public Task<IEnumerable<BudgetDto>> GetAllBudgetsAsync()
-    {
-        throw new NotImplementedException();
-    }
+    
 
     public async Task<Budget> CreateBudgetAsync(BudgetDto dto)
     {

@@ -28,6 +28,7 @@
     <ItemGroup>
       <ProjectReference Include="..\services\MoneyManager\MoneyManager.Application\MoneyManager.Application.csproj" />
       <ProjectReference Include="..\services\MoneyManager\MoneyManager.Domain\MoneyManager.Domain.csproj" />
+      <ProjectReference Include="..\services\MoneyManager\UserService.Proto\UserService.Proto.csproj" />
     </ItemGroup>
 
 </Project>

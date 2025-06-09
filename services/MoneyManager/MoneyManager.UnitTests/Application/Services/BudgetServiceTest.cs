@@ -1,16 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using Moq;
-using NUnit.Framework;
-using MoneyManager.Application.DTOs;
+﻿using MoneyManager.Application.DTOs;
 using MoneyManager.Application.Services;
 using MoneyManager.Domain;
 using MoneyManager.Domain.Entities;
 using MoneyManager.Domain.Events;
 using MoneyManager.Domain.GrpcClients;
 using MoneyManager.Domain.Repositories;
+using Moq;
 
-namespace MoneyManager.Application.Tests.Services
+namespace MoneyManager.UnitTests.Application.Services
 {
     [TestFixture]
     public class BudgetServiceTests

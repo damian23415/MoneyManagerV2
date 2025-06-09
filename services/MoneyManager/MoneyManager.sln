@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.EventProcessor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Proto", "UserService.Proto\UserService.Proto.csproj", "{1F126E6E-52ED-4EA8-814E-51752FB7D6A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.UnitTests", "..\..\MoneyManager.UnitTests\MoneyManager.UnitTests.csproj", "{19719782-DB71-4032-B65C-6F464AAC12F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.UnitTests", "MoneyManager.UnitTests\MoneyManager.UnitTests.csproj", "{9C9745FC-58B5-4507-AC1D-7BE6ADB2FAF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,9 +44,9 @@ Global
 		{1F126E6E-52ED-4EA8-814E-51752FB7D6A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F126E6E-52ED-4EA8-814E-51752FB7D6A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F126E6E-52ED-4EA8-814E-51752FB7D6A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19719782-DB71-4032-B65C-6F464AAC12F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19719782-DB71-4032-B65C-6F464AAC12F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19719782-DB71-4032-B65C-6F464AAC12F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19719782-DB71-4032-B65C-6F464AAC12F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C9745FC-58B5-4507-AC1D-7BE6ADB2FAF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C9745FC-58B5-4507-AC1D-7BE6ADB2FAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C9745FC-58B5-4507-AC1D-7BE6ADB2FAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C9745FC-58B5-4507-AC1D-7BE6ADB2FAF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

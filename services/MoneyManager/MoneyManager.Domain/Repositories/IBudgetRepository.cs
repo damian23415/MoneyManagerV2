@@ -5,5 +5,6 @@ namespace MoneyManager.Domain.Repositories;
 public interface IBudgetRepository
 {
     Task<IEnumerable<Budget>> GetAllAsync();
-    Task AddAsync(Budget budget);
+    Task<Budget?> GetBudgetForUserAndCategoryAsync(Guid userId, Guid categoryId);
+    Task<int> AddAsync(Budget budget);
 }

@@ -12,6 +12,15 @@ public class DbConnectionFactory
     {
         _connectionString = configuration.GetConnectionString("DefaultConnection");
     }
-    
-    public IDbConnection CreateConnection() => new SqlConnection(_connectionString);
+
+    public async Task<IDbConnection> CreateOpenConnectionAsync()
+    {
+        if (string.IsNullOrEmpty(_connectionString))
+            throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
+        
+        var connection = new SqlConnection(_connectionString);
+        
+        await connection.OpenAsync();
+        return connection;
+    }
 }

@@ -17,4 +17,9 @@ public class BudgetDto
     
     [Required(ErrorMessage = "Category is required.")]
     public Guid CategoryId { get; set; }
+    
+    public DateTime StartDate { get; set; } = DateTime.Now;
+    
+    [Required(ErrorMessage = "End date is required.")]
+    public DateTime EndDate { get; set; }
 }

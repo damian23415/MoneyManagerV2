@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Dapper;
+﻿using Dapper;
 using MoneyManager.Domain.Entities;
 using MoneyManager.Domain.Repositories;
 using MoneyManager.Infrastructure.Persistence;
@@ -17,7 +16,7 @@ public class CategoryRepository : ICategoryRepository
     
     public async Task<IEnumerable<Category>> GetAllAsync()
     {
-        var connection = _dbConnectionFactory.CreateConnection();
+        using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
         var sql = "select * from Categories";
 
         return await connection.QueryAsync<Category>(sql);

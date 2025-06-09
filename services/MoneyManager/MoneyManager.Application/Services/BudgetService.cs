@@ -33,7 +33,7 @@ public class BudgetService : IBudgetService
         if (!userExists)
             throw new ArgumentException($"User with ID {dto.UserId} does not exist.");
         
-        var budget = new Budget(dto.Name, dto.Limit, dto.CategoryId);
+        var budget = new Budget(dto.Name, dto.Limit, dto.CategoryId, dto.UserId, dto.StartDate, dto.EndDate);
 
         await _budgetRepository.AddAsync(budget);
         

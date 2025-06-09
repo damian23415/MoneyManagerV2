@@ -17,24 +17,33 @@ public class BudgetRepository : IBudgetRepository
 
     public async Task<IEnumerable<Budget>> GetAllAsync()
     {
-        const string sql = "select Id, Name, Limit, Category from Budgets";
-        var connection = _dbConnectionFactory.CreateConnection();
+        using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
+        const string sql = "select * from Budgets";
         
         return await connection.QueryAsync<Budget>(sql);
     }
 
-    public async Task AddAsync(Budget budget)
+    public async Task<Budget?> GetBudgetForUserAndCategoryAsync(Guid userId, Guid categoryId)
     {
-        var connection = _dbConnectionFactory.CreateConnection();
-
-        const string sql = "insert into Budgets (Id, Name, Limit, Category) values (@Id, @Name, @Limit, @Category)";
+        using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
+        const string sql = "select Id, Name, Limit, CategoryId from Budgets where UserId = @UserId and CategoryId = @CategoryId";
         
-        await connection.ExecuteAsync(sql, new
+        return await connection.QuerySingleOrDefaultAsync<Budget>(sql, new { UserId = userId, CategoryId = categoryId });
+    }
+
+    public async Task<int> AddAsync(Budget budget)
+    {
+        var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
+
+        const string sql = "insert into Budgets (Id, Name, Limit, Category, UserId) values (@Id, @Name, @Limit, @Category, @UserId)";
+        
+        return await connection.ExecuteAsync(sql, new
         {
             budget.Id,
             budget.Name,
             budget.Limit,
-            Category = budget.CategoryId
+            budget.CategoryId,
+            budget.UserId
         });
     }
 }

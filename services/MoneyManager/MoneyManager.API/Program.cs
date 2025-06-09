@@ -1,28 +1,12 @@
-using System.Data;
-using Microsoft.Data.SqlClient;
 using MoneyManager.API;
-using MoneyManager.Application.Services;
-using MoneyManager.Application.Services.Interfaces;
-using MoneyManager.Domain;
-using MoneyManager.Domain.GrpcClients;
-using MoneyManager.Domain.Repositories;
+using MoneyManager.Application;
 using MoneyManager.Infrastructure;
-using MoneyManager.Infrastructure.GrpcClients;
-using MoneyManager.Infrastructure.Persistence;
-using MoneyManager.Infrastructure.Repositories;
 using UserService.Proto;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<IBudgetService, BudgetService>();
-builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
-builder.Services.AddScoped<IUserGrpcClient, UserGrpcClient>();
-
-var dispatcher = await RabbitMqDomainEventDispatcher.CreateAsync();
-builder.Services.AddSingleton<IDomainEventDispatcher>(dispatcher);
-builder.Services.AddSingleton<DbConnectionFactory>();
+builder.Services.AddApplicationServices();
+await builder.Services.AddInfrastructureServices();
 
 builder.Services.AddGrpcClient<UserGrpc.UserGrpcClient>(o =>
 {
@@ -41,6 +25,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapCategoryEndpoints();
 app.MapBudgetEndpoints();
+app.MapExpenseEndpoints();
 
 app.MapGet("/swagger", () => "Hello World!");
 

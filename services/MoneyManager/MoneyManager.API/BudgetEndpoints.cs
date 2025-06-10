@@ -8,7 +8,7 @@ public static class BudgetEndpoints
 {
     public static void MapBudgetEndpoints(this WebApplication app)
     {
-        app.MapPost("/createBudget", async (BudgetDto budgetDto, IBudgetService service) =>
+        app.MapPost("/budgets/createBudget", async (BudgetDto budgetDto, IBudgetService service) =>
         {
             var validationResults = new List<ValidationResult>();
             var context = new ValidationContext(budgetDto, null, null);

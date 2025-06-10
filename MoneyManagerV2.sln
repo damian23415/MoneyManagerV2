@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Protos", "servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.UnitTests", "services\MoneyManager\MoneyManager.UnitTests\MoneyManager.UnitTests.csproj", "{F801463A-6D65-4ADE-A380-B3FB156E506D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.IntegrationTests", "services\MoneyManager\MoneyManager.IntegrationTests\MoneyManager.IntegrationTests.csproj", "{32314DDC-206D-495A-9D1D-91CCB27FEC32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -187,6 +189,18 @@ Global
 		{F801463A-6D65-4ADE-A380-B3FB156E506D}.Release|x64.Build.0 = Release|Any CPU
 		{F801463A-6D65-4ADE-A380-B3FB156E506D}.Release|x86.ActiveCfg = Release|Any CPU
 		{F801463A-6D65-4ADE-A380-B3FB156E506D}.Release|x86.Build.0 = Release|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Debug|x64.Build.0 = Debug|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Debug|x86.Build.0 = Debug|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Release|x64.ActiveCfg = Release|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Release|x64.Build.0 = Release|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Release|x86.ActiveCfg = Release|Any CPU
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -206,5 +220,6 @@ Global
 		{46BE8D49-7C90-4E48-A39E-C8AB9C0FAF39} = {BB9B0570-D764-F740-A1C1-3444BA1D5022}
 		{617A06D8-F2DB-4B22-953D-1AA5B0F2CCE9} = {BB9B0570-D764-F740-A1C1-3444BA1D5022}
 		{F801463A-6D65-4ADE-A380-B3FB156E506D} = {38618EF1-5A56-9043-E3BF-A76200C35616}
+		{32314DDC-206D-495A-9D1D-91CCB27FEC32} = {38618EF1-5A56-9043-E3BF-A76200C35616}
 	EndGlobalSection
 EndGlobal

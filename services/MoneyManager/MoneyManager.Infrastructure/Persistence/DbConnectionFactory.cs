@@ -13,7 +13,7 @@ public class DbConnectionFactory
         _connectionString = configuration.GetConnectionString("DefaultConnection");
     }
 
-    public async Task<IDbConnection> CreateOpenConnectionAsync()
+    public virtual async Task<IDbConnection> CreateOpenConnectionAsync()
     {
         if (string.IsNullOrEmpty(_connectionString))
             throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");

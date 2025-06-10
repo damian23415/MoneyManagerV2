@@ -1,0 +1,19 @@
+﻿syntax = "proto3";
+option csharp_namespace = "UserService.Proto";
+
+package UserPreferences;
+
+service UserPreferencesService {
+  rpc GetUserPreferences (GetUserPreferencesRequest) returns (GetUserPreferencesResponse);
+}
+
+message GetUserPreferencesRequest {
+  string userId = 1;
+}
+
+message GetUserPreferencesResponse {
+  string userId = 1;
+  string preferredCurrency = 2;
+  string language = 3;
+  bool emailNotificationsEnabled = 4;
+}

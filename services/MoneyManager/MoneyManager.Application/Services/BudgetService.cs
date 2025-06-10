@@ -13,12 +13,14 @@ public class BudgetService : IBudgetService
     private readonly IDomainEventDispatcher _dispatcher;
     private readonly IBudgetRepository _budgetRepository;
     private readonly IUserGrpcClient _userClient;
+    private readonly IUserPreferencesGrpcClient _userPreferencesClient;
 
-    public BudgetService(IDomainEventDispatcher dispatcher, IBudgetRepository budgetRepository, IUserGrpcClient userClient)
+    public BudgetService(IDomainEventDispatcher dispatcher, IBudgetRepository budgetRepository, IUserGrpcClient userClient, IUserPreferencesGrpcClient userPreferencesClient)
     {
         _dispatcher = dispatcher;
         _budgetRepository = budgetRepository;
         _userClient = userClient;
+        _userPreferencesClient = userPreferencesClient;
     }
     
 
@@ -28,6 +30,13 @@ public class BudgetService : IBudgetService
         
         if (!userExists)
             throw new ArgumentException($"User with ID {dto.UserId} does not exist.");
+        
+        var userPreferences = await _userPreferencesClient.GetUserPreferencesAsync(dto.UserId);
+
+        if (userPreferences != null && userPreferences.PreferredCurrency != "PLN")
+        {
+            // obsługa innych wallut, dojdzie w przyszłości, na razie ma to na celu naukę korzystania z gRPC
+        }
         
         var budget = new Budget(dto.Name, dto.Limit, dto.CategoryId, dto.UserId, dto.StartDate, dto.EndDate);
 

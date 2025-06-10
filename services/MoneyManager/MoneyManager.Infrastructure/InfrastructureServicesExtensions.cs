@@ -13,7 +13,7 @@ public static class InfrastructureServicesExtensions
     public static async Task<IServiceCollection> AddInfrastructureServices(this IServiceCollection services)
     {
         //db connection factory
-        services.AddSingleton<DbConnectionFactory>();
+        services.AddScoped<DbConnectionFactory>();
         
         //rabbit
         var dispatcher = await RabbitMqDomainEventDispatcher.CreateAsync();
@@ -24,6 +24,8 @@ public static class InfrastructureServicesExtensions
         services.AddScoped<IBudgetRepository, BudgetRepository>();
         services.AddScoped<IExpenseRepository, ExpenseRepository>();
         services.AddScoped<IUserGrpcClient, UserGrpcClient>();
+        services.AddScoped<IUserPreferencesGrpcClient, UserPreferencesGrpcClient>();
+
         
         return services;
     }

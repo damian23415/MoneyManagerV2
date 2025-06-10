@@ -15,6 +15,7 @@ namespace MoneyManager.UnitTests.Application.Services
         private Mock<IDomainEventDispatcher> _dispatcherMock;
         private Mock<IBudgetRepository> _budgetRepoMock;
         private Mock<IUserGrpcClient> _userClientMock;
+        private Mock<IUserPreferencesGrpcClient> _userPreferencesClientMock;
         private BudgetService _budgetService;
 
         [SetUp]
@@ -24,7 +25,7 @@ namespace MoneyManager.UnitTests.Application.Services
             _budgetRepoMock = new Mock<IBudgetRepository>();
             _userClientMock = new Mock<IUserGrpcClient>();
 
-            _budgetService = new BudgetService(_dispatcherMock.Object, _budgetRepoMock.Object, _userClientMock.Object);
+            _budgetService = new BudgetService(_dispatcherMock.Object, _budgetRepoMock.Object, _userClientMock.Object, _userPreferencesClientMock.Object);
         }
 
         [Test]

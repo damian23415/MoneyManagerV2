@@ -13,6 +13,11 @@ builder.Services.AddGrpcClient<UserGrpc.UserGrpcClient>(o =>
     o.Address = new Uri("http://localhost:5264"); // <- adres UserService (port z docker-compose lub launchSettings)
 });
 
+builder.Services.AddGrpcClient<UserPreferencesService.UserPreferencesServiceClient>(o =>
+{
+    o.Address = new Uri("http://localhost:5264");
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();

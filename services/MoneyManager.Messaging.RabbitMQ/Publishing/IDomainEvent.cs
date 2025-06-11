@@ -1,4 +1,4 @@
-﻿namespace MoneyManager.Domain.Events;
+﻿namespace MoneyManager.Messaging.RabbitMQ.Publishing;
 
 public interface IDomainEvent
 {

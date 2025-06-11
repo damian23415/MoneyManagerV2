@@ -1,4 +1,6 @@
-﻿namespace MoneyManager.Domain.Events;
+﻿using MoneyManager.Messaging.RabbitMQ.Publishing;
+
+namespace MoneyManager.Domain.Events;
 
 public class BudgetCreatedEvent : IDomainEvent
 {

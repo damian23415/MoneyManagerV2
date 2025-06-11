@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\MoneyManager.Messaging.RabbitMQ\MoneyManager.Messaging.RabbitMQ.csproj" />
       <ProjectReference Include="..\UserService.Proto\UserService.Proto.csproj" />
     </ItemGroup>
 

@@ -1,4 +1,5 @@
 ﻿using MoneyManager.Domain.Events;
+using MoneyManager.Messaging.RabbitMQ.Publishing;
 
 namespace MoneyManager.Application.EventHandlers;
 

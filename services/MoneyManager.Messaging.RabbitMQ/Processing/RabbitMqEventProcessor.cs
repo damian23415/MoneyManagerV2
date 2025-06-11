@@ -1,16 +1,23 @@
 ﻿using System.Text;
 using System.Text.Json;
-using MoneyManager.Domain.Events;
+using MoneyManager.Messaging.RabbitMQ.Extensions;
+using MoneyManager.Messaging.RabbitMQ.Publishing;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace MoneyManager.Infrastructure;
+namespace MoneyManager.Messaging.RabbitMQ.Processing;
 
 public class RabbitMqEventProcessor : IAsyncDisposable
 {
     private IConnection _connection;
     private IChannel _channel;
+    private readonly DomainEventTypeRegistry _eventTypeMap;
     private const string QueueName = "domain-events";
+
+    public RabbitMqEventProcessor( DomainEventTypeRegistry eventTypeMap)
+    {
+        _eventTypeMap = eventTypeMap;
+    }
 
     public event Func<IDomainEvent, Task>? OnEventReceived;
 
@@ -42,7 +49,7 @@ public class RabbitMqEventProcessor : IAsyncDisposable
             Console.WriteLine(json);
 
             var eventType = DetectEventType(json);
-            var domainEvent = (IDomainEvent)JsonSerializer.Deserialize(json, eventType)!;
+            var domainEvent = (IDomainEvent)JsonSerializer.Deserialize(json, eventType!)!;
             
             if (OnEventReceived != null)
             {
@@ -55,20 +62,15 @@ public class RabbitMqEventProcessor : IAsyncDisposable
         await _channel.BasicConsumeAsync(QueueName, autoAck: false, consumer: consumer);
     }
 
-    private Type DetectEventType(string json)
+    private Type? DetectEventType(string json)
     {
         using var doc = JsonDocument.Parse(json);
         if (!doc.RootElement.TryGetProperty("EventType", out var typeProperty))
             throw new Exception("EventType missing");
 
         var eventTypeName = typeProperty.GetString();
-
-        return eventTypeName switch
-        {
-            "BudgetCreatedEvent" => typeof(BudgetCreatedEvent),
-            // inne eventy
-            _ => throw new Exception($"Nieznany typ eventu {eventTypeName}")
-        };
+        
+        return _eventTypeMap.GetEventType(eventTypeName!);
     }
 
     public async ValueTask DisposeAsync()

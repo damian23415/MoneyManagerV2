@@ -1,23 +1,23 @@
 ﻿using MoneyManager.Application.DTOs;
 using MoneyManager.Application.Services.Interfaces;
-using MoneyManager.Domain;
 using MoneyManager.Domain.Entities;
 using MoneyManager.Domain.Events;
 using MoneyManager.Domain.GrpcClients;
 using MoneyManager.Domain.Repositories;
+using MoneyManager.Messaging.RabbitMQ.Publishing;
 
 namespace MoneyManager.Application.Services;
 
 public class BudgetService : IBudgetService
 {
-    private readonly IDomainEventDispatcher _dispatcher;
+    private readonly IDomainEventPublisher _publisher;
     private readonly IBudgetRepository _budgetRepository;
     private readonly IUserGrpcClient _userClient;
     private readonly IUserPreferencesGrpcClient _userPreferencesClient;
 
-    public BudgetService(IDomainEventDispatcher dispatcher, IBudgetRepository budgetRepository, IUserGrpcClient userClient, IUserPreferencesGrpcClient userPreferencesClient)
+    public BudgetService(IDomainEventPublisher publisher, IBudgetRepository budgetRepository, IUserGrpcClient userClient, IUserPreferencesGrpcClient userPreferencesClient)
     {
-        _dispatcher = dispatcher;
+        _publisher = publisher;
         _budgetRepository = budgetRepository;
         _userClient = userClient;
         _userPreferencesClient = userPreferencesClient;
@@ -42,7 +42,7 @@ public class BudgetService : IBudgetService
 
         await _budgetRepository.AddAsync(budget);
         
-        await _dispatcher.DispatchAsync(new BudgetCreatedEvent(budget.Id, budget.Name, budget.Limit));
+        await _publisher.PublishAsync(new BudgetCreatedEvent(budget.Id, budget.Name, budget.Limit));
 
         return budget;
     }

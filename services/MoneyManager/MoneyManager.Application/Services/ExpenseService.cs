@@ -6,6 +6,7 @@ using MoneyManager.Domain.Entities;
 using MoneyManager.Domain.Events;
 using MoneyManager.Domain.GrpcClients;
 using MoneyManager.Domain.Repositories;
+using MoneyManager.Messaging.RabbitMQ.Publishing;
 
 namespace MoneyManager.Application.Services;
 
@@ -13,10 +14,10 @@ public class ExpenseService : IExpenseService
 {
     private readonly IExpenseRepository _expenseRepository;
     private readonly IBudgetRepository _budgetRepository;
-    private readonly IDomainEventDispatcher _eventPublisher;
+    private readonly IDomainEventPublisher _eventPublisher;
     private readonly IUserGrpcClient _userClient;
 
-    public ExpenseService(IExpenseRepository expenseRepository, IBudgetRepository budgetRepository, IDomainEventDispatcher eventPublisher, IUserGrpcClient userClient)
+    public ExpenseService(IExpenseRepository expenseRepository, IBudgetRepository budgetRepository, IDomainEventPublisher eventPublisher, IUserGrpcClient userClient)
     {
         _expenseRepository = expenseRepository;
         _budgetRepository = budgetRepository;
@@ -44,7 +45,7 @@ public class ExpenseService : IExpenseService
         if (totalExpenses > budget.Limit)
         {
             var budgetExceededEvent = new BudgetExceededEvent(expense.UserId, budget.Id, budget.Category.Name, budget.Limit, totalExpenses);
-            await _eventPublisher.DispatchAsync(budgetExceededEvent);
+            await _eventPublisher.PublishAsync(budgetExceededEvent);
         }
 
         return expense.Id;

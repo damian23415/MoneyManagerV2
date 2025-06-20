@@ -5,4 +5,5 @@ namespace UserService.Application.Services.Interfaces;
 public interface IUserService
 {
     Task<UserDto?> GetByIdAsync(Guid userId);
+    Task<Guid> RegisterUserAsync(UserDto userDto);
 }

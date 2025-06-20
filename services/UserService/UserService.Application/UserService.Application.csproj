@@ -10,4 +10,10 @@
       <ProjectReference Include="..\UserService.Domain\UserService.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="BCrypt.Net-Next">
+        <HintPath>..\..\..\..\..\Users\Damian\.nuget\packages\bcrypt.net-next\4.0.3\lib\net6.0\BCrypt.Net-Next.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

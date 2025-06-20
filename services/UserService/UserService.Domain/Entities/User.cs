@@ -8,6 +8,11 @@ public class User
     public string PasswordHash { get; private set; }
     public string UserRole { get; set; }
 
+    public User()
+    {
+        //For Dapper
+    }
+    
     public User(string userName, string email, string passwordHash, string userRole)
     {
         UserName = userName;

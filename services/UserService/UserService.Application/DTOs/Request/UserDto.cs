@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using UserService.Application.Enums;
 
-namespace UserService.Application.DTOs;
+namespace UserService.Application.DTOs.Request;
 
 public class UserDto
 {
     public Guid Id { get; set; }
     
     [Required(ErrorMessage = "Username jest wymagany.")]
-    public string? Username { get; set; }
+    public string? UserName { get; set; }
     
     [Required]
     [EmailAddress(ErrorMessage = "Nieprawidłowy format adresu email.")]

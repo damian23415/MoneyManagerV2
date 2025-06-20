@@ -1,4 +1,5 @@
 ﻿using UserService.Application.DTOs;
+using UserService.Application.DTOs.Request;
 using UserService.Application.Enums;
 using UserService.Application.Services.Interfaces;
 using UserService.Domain.Entities;
@@ -17,9 +18,9 @@ public class UserService : IUserService
         _passwordHasher = passwordHasher;
     }
 
-    public async Task<UserDto?> GetByIdAsync(Guid userId)
+    public async Task<UserDto?> GetByEmail(string email)
     {
-        var user = await _userRepository.GetByIdAsync(userId);
+        var user = await _userRepository.GetByEmailAsync(email);
 
         if (user == null)
             return null;
@@ -35,7 +36,7 @@ public class UserService : IUserService
     public async Task<Guid> RegisterUserAsync(UserDto userDto)
     {
         var user = new User(
-            userName: userDto.Username,
+            userName: userDto.UserName,
             email: userDto.Email,
             passwordHash: _passwordHasher.HashPassword(userDto.Password),
             userRole: userDto.Role.ToString()

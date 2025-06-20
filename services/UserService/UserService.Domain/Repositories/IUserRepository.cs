@@ -4,6 +4,6 @@ namespace UserService.Domain.Repositories;
 
 public interface IUserRepository
 {
-    Task<User?> GetByIdAsync(Guid id);
+    Task<User?> GetByEmailAsync(string email);
     Task<Guid> RegisterUserAsync(User user);
 }

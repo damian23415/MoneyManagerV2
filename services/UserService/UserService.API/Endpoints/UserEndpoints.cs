@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using UserService.Application.DTOs;
+using UserService.Application.DTOs.Request;
 using UserService.Application.Services.Interfaces;
 
 namespace UserService.API.Endpoints;

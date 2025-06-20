@@ -13,12 +13,12 @@ public class UserRepository : IUserRepository
         _dbConnectionFactory = dbConnectionFactory;
     }
     
-    public async Task<User?> GetByIdAsync(Guid id)
+    public async Task<User?> GetByEmailAsync(string email)
     {
         using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
-        const string sql = "select Id, Email, PasswordHash, UserRole from Users where Id = @Id";
+        const string sql = "select Id, UserName, Email, PasswordHash, UserRole from Users where Email = @Email";
         
-        return await connection.QuerySingleOrDefaultAsync<User>(sql, new { Id = id });
+        return await connection.QuerySingleOrDefaultAsync<User>(sql, new { Email = email });
     }
 
     public async Task<Guid> RegisterUserAsync(User user)

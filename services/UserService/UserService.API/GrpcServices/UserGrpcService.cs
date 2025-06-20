@@ -15,14 +15,14 @@ public class UserGrpcService : UserGrpc.UserGrpcBase
 
     public override async Task<UserResponse> GetUser(UserRequest request, ServerCallContext context)
     {
-        var user = await _userService.GetByIdAsync(Guid.Parse(request.UserId));
+        var user = await _userService.GetByEmail(request.Email);
         
         if (user == null) 
             throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
         
         return new UserResponse
         {
-            UserName = "trelemorele",
+            UserName = user.UserName,
             Email = user.Email
         };
     }

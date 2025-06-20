@@ -8,7 +8,7 @@ service UserGrpc {
 }
 
 message UserRequest {
-  string userId = 1;
+  string email = 1;
 }
 
 message UserResponse {

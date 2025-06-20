@@ -15,6 +15,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserPreferencesService, UserPreferencesService>();
 builder.Services.AddScoped<IUserPreferencesRepository, UserPreferencesRepository>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<DbConnectionFactory>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -41,6 +42,7 @@ if (app.Environment.IsDevelopment())
 app.MapGrpcService<UserGrpcService>();
 app.MapGrpcService<UserPreferencesGrpc>();
 app.MapUserEndpoints();
+app.MapAuthEndpoints();
 app.MapGet("/", () => "swagger");
 
 app.Run();

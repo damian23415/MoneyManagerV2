@@ -1,3 +1,5 @@
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 using MoneyManager.API;
 using MoneyManager.Application;
 using MoneyManager.Application.EventHandlers;
@@ -23,6 +25,19 @@ builder.Services.AddGrpcClient<UserPreferencesService.UserPreferencesServiceClie
     o.Address = new Uri("http://localhost:5264");
 });
 
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 var budgetCreatedHandler = new BudgetCreatedEventHandler();
 
@@ -42,7 +57,33 @@ await processor.StartAsync();
 builder.Services.AddScoped<IDomainEventPublisher>(sp => sp.GetRequiredService<RabbitMqDomainEventPublisher>());
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Wpisz token JWT w formacie: Bearer {twój_token}"
+    });
+
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -56,5 +97,7 @@ app.MapBudgetEndpoints();
 app.MapExpenseEndpoints();
 
 app.MapGet("/swagger", () => "Hello World!");
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

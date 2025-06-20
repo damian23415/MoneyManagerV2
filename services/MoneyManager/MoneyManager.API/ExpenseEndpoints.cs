@@ -19,6 +19,7 @@ public static class ExpenseEndpoints
                 var createdExpenseId = await service.AddExpenseAsync(expenseDto);
                 return Results.Created($"/expenses/{createdExpenseId}", createdExpenseId);
             })
+            .RequireAuthorization()
             .WithName("CreateExpense")
             .WithTags("Expenses");
         

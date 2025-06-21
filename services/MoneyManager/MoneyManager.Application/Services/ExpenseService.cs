@@ -25,26 +25,21 @@ public class ExpenseService : IExpenseService
         _userClient = userClient;
     }
 
-    public async Task<Guid> AddExpenseAsync(ExpenseDto expenseDto)
+    public async Task<Guid> AddExpenseAsync(ExpenseDto expenseDto, Guid userId)
     {
-        var userExists = await _userClient.CheckUserExistsAsync(expenseDto.UserId);
-        
-        if (!userExists)
-            throw new ArgumentException($"User with ID {expenseDto.UserId} does not exist.");
-        
-        var expense = new Expense(expenseDto.Amount, expenseDto.Date, expenseDto.Description, expenseDto.UserId, expenseDto.CategoryId);
+        var expense = new Expense(expenseDto.Amount, expenseDto.Date, expenseDto.Description, expenseDto.CategoryId);
         await _expenseRepository.AddAsync(expense);
         
-        var budget = await _budgetRepository.GetBudgetForUserAndCategoryAsync(expense.UserId, expense.CategoryId);
+        var budget = await _budgetRepository.GetBudgetForUserAndCategoryAsync(userId, expense.CategoryId);
 
         if (budget == null)
             return expense.Id;
         
-        var totalExpenses = await _expenseRepository.GetTotalExpensesForUserPeriodAsync(expense.UserId, budget.StartDate, budget.EndDate);
+        var totalExpenses = await _expenseRepository.GetTotalExpensesForUserPeriodAsync(userId, budget.StartDate, budget.EndDate);
 
         if (totalExpenses > budget.Limit)
         {
-            var budgetExceededEvent = new BudgetExceededEvent(expense.UserId, budget.Id, budget.Category.Name, budget.Limit, totalExpenses);
+            var budgetExceededEvent = new BudgetExceededEvent(userId, budget.Id, budget.Category.Name, budget.Limit, totalExpenses);
             await _eventPublisher.PublishAsync(budgetExceededEvent);
         }
 
@@ -66,7 +61,6 @@ public class ExpenseService : IExpenseService
             Date = expense.Date,
             Description = expense.Description,
             CategoryId = expense.CategoryId,
-            UserId = expense.UserId,
         };
     }
 }

@@ -42,6 +42,8 @@ public class ExpenseService : IExpenseService
             var budgetExceededEvent = new BudgetExceededEvent(userId, budget.Id, budget.Category.Name, budget.Limit, totalExpenses);
             await _eventPublisher.PublishAsync(budgetExceededEvent);
         }
+        
+        await _eventPublisher.PublishAsync(new TransactionCreatedEvent(userId));
 
         return expense.Id;
 

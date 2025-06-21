@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.IntegrationTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager.Messaging.RabbitMQ", "services\MoneyManager.Messaging.RabbitMQ\MoneyManager.Messaging.RabbitMQ.csproj", "{D516ACDB-BB51-4A80-A56E-02FA8EFA917D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.UnitTests", "services\UserService\UserService.UnitTests\UserService.UnitTests.csproj", "{C4382320-EF2A-4522-B0F2-6D4659CE046A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,6 +203,18 @@ Global
 		{D516ACDB-BB51-4A80-A56E-02FA8EFA917D}.Release|x64.Build.0 = Release|Any CPU
 		{D516ACDB-BB51-4A80-A56E-02FA8EFA917D}.Release|x86.ActiveCfg = Release|Any CPU
 		{D516ACDB-BB51-4A80-A56E-02FA8EFA917D}.Release|x86.Build.0 = Release|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Debug|x64.Build.0 = Debug|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Debug|x86.Build.0 = Debug|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Release|x64.ActiveCfg = Release|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Release|x64.Build.0 = Release|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Release|x86.ActiveCfg = Release|Any CPU
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -221,5 +235,6 @@ Global
 		{F801463A-6D65-4ADE-A380-B3FB156E506D} = {38618EF1-5A56-9043-E3BF-A76200C35616}
 		{32314DDC-206D-495A-9D1D-91CCB27FEC32} = {38618EF1-5A56-9043-E3BF-A76200C35616}
 		{D516ACDB-BB51-4A80-A56E-02FA8EFA917D} = {5854FF58-B8C5-05C6-5BF2-ACE42193F22B}
+		{C4382320-EF2A-4522-B0F2-6D4659CE046A} = {BB9B0570-D764-F740-A1C1-3444BA1D5022}
 	EndGlobalSection
 EndGlobal

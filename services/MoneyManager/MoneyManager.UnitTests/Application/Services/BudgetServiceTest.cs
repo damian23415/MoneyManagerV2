@@ -5,6 +5,7 @@ using MoneyManager.Domain.Entities;
 using MoneyManager.Domain.Events;
 using MoneyManager.Domain.GrpcClients;
 using MoneyManager.Domain.Repositories;
+using MoneyManager.Messaging.RabbitMQ.Publishing;
 using Moq;
 
 namespace MoneyManager.UnitTests.Application.Services
@@ -12,7 +13,7 @@ namespace MoneyManager.UnitTests.Application.Services
     [TestFixture]
     public class BudgetServiceTests
     {
-        private Mock<IDomainEventDispatcher> _dispatcherMock;
+        private Mock<IDomainEventPublisher> _publisherMock;
         private Mock<IBudgetRepository> _budgetRepoMock;
         private Mock<IUserGrpcClient> _userClientMock;
         private Mock<IUserPreferencesGrpcClient> _userPreferencesClientMock;
@@ -21,11 +22,12 @@ namespace MoneyManager.UnitTests.Application.Services
         [SetUp]
         public void Setup()
         {
-            _dispatcherMock = new Mock<IDomainEventDispatcher>();
+            _publisherMock = new Mock<IDomainEventPublisher>();
             _budgetRepoMock = new Mock<IBudgetRepository>();
             _userClientMock = new Mock<IUserGrpcClient>();
+            _userPreferencesClientMock = new Mock<IUserPreferencesGrpcClient>();
 
-            _budgetService = new BudgetService(_dispatcherMock.Object, _budgetRepoMock.Object, _userClientMock.Object, _userPreferencesClientMock.Object);
+            _budgetService = new BudgetService(_publisherMock.Object, _budgetRepoMock.Object, _userClientMock.Object, _userPreferencesClientMock.Object);
         }
 
         [Test]
@@ -55,7 +57,7 @@ namespace MoneyManager.UnitTests.Application.Services
             Assert.That(result.UserId, Is.EqualTo(dto.UserId));
             
             _budgetRepoMock.Verify(x => x.AddAsync(It.IsAny<Budget>()), Times.Once);
-            _dispatcherMock.Verify(x => x.DispatchAsync(It.IsAny<BudgetCreatedEvent>()), Times.Once);
+            _publisherMock.Verify(x => x.PublishAsync(It.IsAny<BudgetCreatedEvent>()), Times.Once);
         }
 
         [Test]
@@ -79,7 +81,7 @@ namespace MoneyManager.UnitTests.Application.Services
             Assert.That(ex.Message, Does.Contain("does not exist"));
 
             _budgetRepoMock.Verify(x => x.AddAsync(It.IsAny<Budget>()), Times.Never);
-            _dispatcherMock.Verify(x => x.DispatchAsync(It.IsAny<BudgetCreatedEvent>()), Times.Never);
+            _publisherMock.Verify(x => x.PublishAsync(It.IsAny<BudgetCreatedEvent>()), Times.Never);
         }
     }
 }

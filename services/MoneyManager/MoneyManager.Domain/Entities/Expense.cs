@@ -7,6 +7,7 @@ public class Expense
     public DateTime Date { get; private set; }
     public string? Description { get; private set; }
     public Guid CategoryId { get; private set; }
+    public Guid UserId { get; private set; }
     
     public Category Category { get; private set; }
 
@@ -15,7 +16,7 @@ public class Expense
         //for ORM
     }
     
-    public Expense(decimal amount, DateTime date, string? description, Guid categoryId)
+    public Expense(decimal amount, DateTime date, string? description, Guid userId, Guid categoryId)
     {
         if (amount <= 0)
             throw new ArgumentException("Amount must be greater than zero.", nameof(amount));
@@ -26,9 +27,13 @@ public class Expense
         if (categoryId == Guid.Empty)
             throw new ArgumentException("Category ID cannot be empty.", nameof(categoryId));
         
+        if (userId == Guid.Empty)
+            throw new ArgumentException("UserId cannot be empty.", nameof(categoryId));
+        
         Amount = amount;
         Date = date;
         Description = description;
+        UserId = userId;
         CategoryId = categoryId;
     }
 }

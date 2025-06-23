@@ -37,7 +37,7 @@ public class ExpenseRepository : IExpenseRepository
     {
         using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
         
-        var sql = "select SUM(Amount) from expense where UserId = @UserId and @Date >= @StartDate and Date <= @EndDate";
+        var sql = "select SUM(Amount) from Expenses where UserId = @UserId and Date >= @StartDate and Date <= @EndDate";
         
         return await connection.ExecuteScalarAsync<decimal>(sql, new { UserId = userId, StartDate = startDate, EndDate = endDate });
     }

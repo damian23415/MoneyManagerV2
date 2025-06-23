@@ -1,7 +1,6 @@
-﻿using System.Data;
+﻿using Events.Events;
 using MoneyManager.Application.DTOs;
 using MoneyManager.Application.Services.Interfaces;
-using MoneyManager.Domain;
 using MoneyManager.Domain.Entities;
 using MoneyManager.Domain.Events;
 using MoneyManager.Domain.GrpcClients;
@@ -27,7 +26,7 @@ public class ExpenseService : IExpenseService
 
     public async Task<Guid> AddExpenseAsync(ExpenseDto expenseDto, Guid userId)
     {
-        var expense = new Expense(expenseDto.Amount, expenseDto.Date, expenseDto.Description, expenseDto.CategoryId);
+        var expense = new Expense(expenseDto.Amount, expenseDto.Date, expenseDto.Description, userId, expenseDto.CategoryId);
         await _expenseRepository.AddAsync(expense);
         
         var budget = await _budgetRepository.GetBudgetForUserAndCategoryAsync(userId, expense.CategoryId);

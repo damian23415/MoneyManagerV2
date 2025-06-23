@@ -18,7 +18,7 @@ public class BudgetRepository : IBudgetRepository
     public async Task<Budget?> GetBudgetForUserAndCategoryAsync(Guid userId, Guid categoryId)
     {
         using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
-        const string sql = "select Id, Name, [Limit], CategoryId from Budgets where UserId = @UserId and CategoryId = @CategoryId";
+        const string sql = "select Id, Name, [Limit], CategoryId, StartDate, EndDate from Budgets where UserId = @UserId and CategoryId = @CategoryId";
         
         return await connection.QuerySingleOrDefaultAsync<Budget>(sql, new { UserId = userId, CategoryId = categoryId });
     }

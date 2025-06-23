@@ -1,6 +1,6 @@
 ﻿using MoneyManager.Messaging.RabbitMQ.Publishing;
 
-namespace MoneyManager.Domain.Events;
+namespace Events.Events;
 
 public class TransactionCreatedEvent : IDomainEvent
 {

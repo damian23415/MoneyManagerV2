@@ -33,6 +33,23 @@ public class UserService : IUserService
         };
     }
 
+    public async Task<UserDto?> GetById(Guid userId)
+    {
+        var user = await _userRepository.GetByIdAsync(userId);
+
+        if (user == null)
+            return null;
+        
+        return new UserDto
+        {
+            Id = user.Id,
+            Email = user.Email,
+            UserName = user.UserName,
+            Role = Enum.Parse<UserRole>(user.UserRole),
+            CreatedAt = user.CreatedAt
+        };
+    }
+
     public async Task<Guid> RegisterUserAsync(UserDto userDto)
     {
         var user = new User(

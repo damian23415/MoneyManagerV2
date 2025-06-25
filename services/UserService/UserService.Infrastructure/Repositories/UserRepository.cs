@@ -21,6 +21,14 @@ public class UserRepository : IUserRepository
         return await connection.QuerySingleOrDefaultAsync<User>(sql, new { Email = email });
     }
 
+    public async Task<User?> GetByIdAsync(Guid userId)
+    {
+        using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();
+
+        const string sql = "select Id, UserName, Email, CreatedAt, UserRole from Users where Id = @UserId";
+        return await connection.QuerySingleOrDefaultAsync<User>(sql, new { UserId = userId });
+    }
+
     public async Task<Guid> RegisterUserAsync(User user)
     {
         using var connection = await _dbConnectionFactory.CreateOpenConnectionAsync();

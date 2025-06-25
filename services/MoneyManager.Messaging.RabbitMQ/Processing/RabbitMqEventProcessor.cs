@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Hosting;
 using MoneyManager.Messaging.RabbitMQ.Extensions;
 using MoneyManager.Messaging.RabbitMQ.Publishing;
 using RabbitMQ.Client;
@@ -7,21 +8,32 @@ using RabbitMQ.Client.Events;
 
 namespace MoneyManager.Messaging.RabbitMQ.Processing;
 
-public class RabbitMqEventProcessor : IAsyncDisposable
+public class RabbitMqEventProcessor : IAsyncDisposable, IHostedService
 {
     private IConnection _connection;
     private IChannel _channel;
     private readonly DomainEventTypeRegistry _eventTypeMap;
     private const string QueueName = "domain-events";
 
-    public RabbitMqEventProcessor( DomainEventTypeRegistry eventTypeMap)
+    public RabbitMqEventProcessor(DomainEventTypeRegistry eventTypeMap)
     {
         _eventTypeMap = eventTypeMap;
     }
 
     public event Func<IDomainEvent, Task>? OnEventReceived;
 
-    public async Task StartAsync()
+    
+    public async Task StartAsync(CancellationToken cancellationToken)
+    {
+        await StartListeningAsync();
+    }
+
+    public async Task StopAsync(CancellationToken cancellationToken)
+    {
+        await DisposeAsync();
+    }
+    
+    private async Task StartListeningAsync()
     {
         string rabbitHost = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost";
         string rabbitUser = Environment.GetEnvironmentVariable("RABBITMQ_USER") ?? "guest";
@@ -72,10 +84,13 @@ public class RabbitMqEventProcessor : IAsyncDisposable
         
         return _eventTypeMap.GetEventType(eventTypeName!);
     }
-
+    
+    
     public async ValueTask DisposeAsync()
     {
         await _channel.CloseAsync();
         await _connection.CloseAsync();
     }
+
+  
 }

@@ -17,12 +17,12 @@ await builder.Services.AddInfrastructureServices();
 
 builder.Services.AddGrpcClient<UserGrpc.UserGrpcClient>(o =>
 {
-    o.Address = new Uri("http://localhost:5264"); // <- adres UserService (port z docker-compose lub launchSettings)
+    o.Address = new Uri("http://localhost:5002"); // <- adres UserService (port z docker-compose lub launchSettings)
 });
 
 builder.Services.AddGrpcClient<UserPreferencesService.UserPreferencesServiceClient>(o =>
 {
-    o.Address = new Uri("http://localhost:5264");
+    o.Address = new Uri("http://localhost:5002");
 });
 
 builder.Services.AddAuthentication("Bearer")
@@ -53,7 +53,7 @@ processor.OnEventReceived += async e =>
     }
 };
 
-await processor.StartAsync();
+//await processor.StartAsync(CancellationToken.None);
 builder.Services.AddScoped<IDomainEventPublisher>(sp => sp.GetRequiredService<RabbitMqDomainEventPublisher>());
 
 builder.Services.AddEndpointsApiExplorer();

@@ -1,5 +1,6 @@
 ﻿using Events.Events;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using MoneyManager.Messaging.RabbitMQ.Extensions;
 using MoneyManager.Messaging.RabbitMQ.Processing;
 using NotificationService.Application.EventsProcessor;
@@ -8,22 +9,32 @@ namespace NotificationService.Application;
 
 public static class EventServiceExtension
 {
-    public static async Task AddEventServices(this IServiceCollection services)
+    public static void AddEventServices(this IServiceCollection services)
     {
-        var transactionCreated = new TransactionCreatedHandler();
+        services.AddScoped<TransactionCreatedHandler>();
 
         var registry = new DomainEventTypeRegistry();
-        registry.Register<TransactionCreatedEvent>(); // typ z Twojej domeny
-        var processor = new RabbitMqEventProcessor(registry);
+        registry.Register<TransactionCreatedEvent>();
+        services.AddSingleton(registry);
+        
+        services.AddSingleton<RabbitMqEventProcessor>();
 
-        processor.OnEventReceived += async e =>
+        services.AddSingleton<IHostedService>(sp =>
         {
-            if (e is TransactionCreatedEvent ev)
+            var processor = sp.GetRequiredService<RabbitMqEventProcessor>();
+            
+            processor.OnEventReceived += async e =>
             {
-                await transactionCreated.HandleAsync(ev);
-            }
-        };
+                if (e is TransactionCreatedEvent ev)
+                {
+                    using var scope = sp.CreateScope();
+                    var handler = scope.ServiceProvider.GetRequiredService<TransactionCreatedHandler>();
+                    await handler.HandleAsync(ev);
+                }
+            };
+            processor.StartAsync(CancellationToken.None).GetAwaiter().GetResult();
 
-        await processor.StartAsync();
+            return processor;
+        });
     }
 }

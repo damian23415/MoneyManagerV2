@@ -1,10 +1,11 @@
-﻿using Grpc.Core;
+﻿using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
+using ProtoContracts.User.UserService.Proto;
 using UserService.Application.Services.Interfaces;
-using UserService.Proto;
 
 namespace UserService.API.GrpcServices;
 
-public class UserGrpcService : UserGrpc.UserGrpcBase
+public class UserGrpcService : ProtoContracts.User.UserService.Proto.UserService.UserServiceBase
 {
     private readonly IUserService _userService;
 
@@ -13,9 +14,9 @@ public class UserGrpcService : UserGrpc.UserGrpcBase
         _userService = userService;
     }
 
-    public override async Task<UserResponse> GetUser(UserRequest request, ServerCallContext context)
+    public override async Task<UserResponse> GetUserById(UserRequest request, ServerCallContext context)
     {
-        var user = await _userService.GetByEmail(request.Email);
+        var user = await _userService.GetById(Guid.Parse(request.UserId));
         
         if (user == null) 
             throw new RpcException(new Status(StatusCode.NotFound, "User not found"));
@@ -23,7 +24,9 @@ public class UserGrpcService : UserGrpc.UserGrpcBase
         return new UserResponse
         {
             UserName = user.UserName,
-            Email = user.Email
+            Email = user.Email,
+            UserRole = (UserRole)user.Role,
+            CreatedAt = Timestamp.FromDateTime(user.CreatedAt.ToUniversalTime())
         };
     }
 }

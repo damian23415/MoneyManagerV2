@@ -19,4 +19,5 @@ public class UserDto
     [MaxLength(100, ErrorMessage = "Hasło może mieć maksymalnie 100 znaków.")]
     public string? Password { get; set; }
     public UserRole Role { get; set; }
+    public DateTime CreatedAt { get; set; }
 }

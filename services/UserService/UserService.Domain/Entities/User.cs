@@ -7,6 +7,7 @@ public class User
     public string Email { get; set; }
     public string PasswordHash { get; set; }
     public string UserRole { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public User()
     {

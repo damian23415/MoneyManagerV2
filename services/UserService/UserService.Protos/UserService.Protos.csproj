@@ -8,7 +8,6 @@
 
 
     <ItemGroup>
-        <Protobuf Include="user.proto" GrpcServices="Server" />
         <Protobuf Include="user_preferences.proto" GrpcServices="Server" />
     </ItemGroup>
 
